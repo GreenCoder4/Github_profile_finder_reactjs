@@ -1,9 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Todo from './Todo';
 import TodoForm from './TodoForm'
 
+const getlocalitem=()=>{
+    let task= localStorage.getItem('list')
+    if (task){
+        return JSON.parse(task)
+    }else{
+        return[];
+    }
+}
+
+
+
 const TodoList = (prop) => {
-    const [list, setlist] = useState([]);
+    const [list, setlist] = useState(getlocalitem());
 
 
     const todolist=(lists)=>{
@@ -19,6 +30,10 @@ const TodoList = (prop) => {
         setlist(finaldata)
     }
   
+    useEffect(() => {
+        localStorage.setItem("list", JSON.stringify(list))
+    
+    }, [list]);
    
   return (
     <>
